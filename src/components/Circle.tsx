@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   circle: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 100,
+    marginBottom: 75,
   },
   text: {
     fontSize: 40,

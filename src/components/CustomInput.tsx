@@ -1,15 +1,19 @@
 import React from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import { TextInput, StyleSheet, View  } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import color from '../constant/colors';
 
 interface Props {
   placeholder: string;
   secureTextEntry?: boolean;
+  iconName: string; 
 }
 
-const CustomInput: React.FC<Props> = ({ placeholder, secureTextEntry }) => {
+const CustomInput: React.FC<Props> = ({ placeholder, secureTextEntry, iconName }) => {
   return (
+    
     <View style={styles.inputContainer}>
+      <Icon name={iconName} size={20} color={color.grey} style={styles.icon} />
       <TextInput
         placeholder={placeholder}
         secureTextEntry={secureTextEntry}
@@ -24,22 +28,29 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width:'100%',
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    marginBottom: 25,
     backgroundColor: color.white,
     borderWidth: 1,
-    borderColor:'#FFFFFF',
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    elevation:2,
-    borderRadius: 10,
+    borderColor: '#F3F4F6',
+    elevation:1,
+    height:55,
+  },
+  icon: {
+    marginRight: 10,
   },
   input: {
+    flex: 1,
     height: 50,
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
-    color: color.black, 
-   // elevation: 1,
-   
-    
+    fontFamily: 'Poppins-Bold',
+    color: color.black,
+   // fontWeight:'500',
+   alignItems:'center'
   },
 });
+

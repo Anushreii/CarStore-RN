@@ -7,12 +7,13 @@ import Signup from './src/screens/Signup.tsx'
 
 export default function App() {
   return (
-   // <Splash/>
-   //<Login/>
-   <AppNavigator/>
-  //<Signup/>
-   
-   
+
+    // <Splash/>
+    //<Login/>
+    <AppNavigator />
+    //<Signup/>
+
+
   )
 }
 

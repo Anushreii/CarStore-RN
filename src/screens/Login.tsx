@@ -1,31 +1,42 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import Circle from '../components/Circle';
 import color from '../constant/colors';
+import KeyboardWrapper from '../components/KeyboardWrapper';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../constant/colors';
 
 const Login: React.FC = () => {
- const navigation = useNavigation();
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle='dark-content'></StatusBar>
+    
+    <KeyboardWrapper style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor={color.white} />
+
      
-      <Circle size={80} bgColor={colors.primary} textColor={colors.white} />
+      <Circle size={80} bgColor={color.primary} textColor={color.white} />
 
       
-      <Text style={styles.title}>Login </Text>
-        <Text style={styles.txt}>Welcome to CarStore</Text>
-        
+      <Text style={styles.title}>Login</Text>
+      <Text style={styles.subtitle}>Welcome to CarStore</Text>
 
-      {/* Inputs */}
-      <CustomInput placeholder="Username" />
-      <CustomInput placeholder="Password" secureTextEntry />
-      <Text style={styles.frgtpwrd}>Forget Password?</Text>
+      
+      <CustomInput placeholder="Username" iconName='person'/>
+      <CustomInput placeholder="Password" iconName='lock' secureTextEntry />
+      
 
-      {/* Button */}
+      <TouchableOpacity>
+      <Text style={styles.forgot}>Forgot Password?</Text></TouchableOpacity> 
+
+      
       <CustomButton
         title="Login"
         onPress={() => console.log('Login pressed')}
@@ -33,26 +44,16 @@ const Login: React.FC = () => {
         textColor={color.white}
       />
 
+      {/* Footer Signup Link */}
       <View style={styles.footer}>
-  <Text style={styles.footerText}>Don’t have an account? </Text>
-  <TouchableOpacity onPress={()=>navigation.navigate('Signup' as never)}>
-    <Text style={styles.link}>Sign Up</Text>
-  </TouchableOpacity>
-</View>
-
-      
-    </View>
+        <Text style={styles.footerText}>Don’t have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup' as never)}>
+          <Text style={styles.signupLink}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardWrapper>
   );
 };
-
-
-{/* <Text style={styles.footer}>
-  Don’t have an account?
-  <TouchableOpacity onPress={() => navigation.navigate('Signup' as never)}>
-    <Text style={styles.link}> Sign Up</Text>
-  </TouchableOpacity>
-</Text> */}
-
 
 export default Login;
 
@@ -65,40 +66,42 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   title: {
-    fontSize: 28,
+    fontSize: 19,
     fontFamily: 'Poppins-Bold',
     color: color.black,
+    fontWeight:"600",
+    marginTop: 5,
   },
-  txt: {
-    marginBottom: 50,
-    fontFamily: 'Poppins-Regular',
-    color: color.black,
-    fontSize:16,
-  },
-
-  frgtpwrd: {
-    fontFamily: 'Poppins-Bold',
-    color: color.black,
-    alignSelf: 'center',
-    marginBottom: 30,
+  subtitle: {
     fontSize: 14,
+    color: '#000000',
+    fontFamily: 'Poppins-Regular',
+    marginBottom: 60,
+    fontWeight:'400',
+  },
+  forgot: {
+    fontSize: 14,
+    color: color.black,
+    fontFamily: 'Poppins-Bold',
+    fontWeight:'500',
+    marginBottom: 20,
   },
   footer: {
-    marginTop: 20,
-    fontSize: 14,
-    fontFamily: 'Poppins-Regular',
-    color: color.black,
     flexDirection: 'row',
+    marginTop: 30,
   },
-  link: {
-    fontFamily: 'Poppins-Bold',
+  footerText: {
+    fontSize: 14,
+    color: color.grey,
+    fontFamily: 'Poppins-Regular',
+    fontWeight:'600',
+  },
+  signupLink: {
+    fontSize: 14,
     color: color.primary,
+    fontFamily: 'Poppins-Bold',
     marginLeft: 5,
   },
-
-  footerText: {
-  fontSize: 14,
-  fontFamily: 'Poppins-Regular',
-  color: color.grey,
-},
 });
+
+
