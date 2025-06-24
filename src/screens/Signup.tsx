@@ -1,17 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import Circle from '../components/Circle';
 import colors from '../constant/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import KeyboardWrapper from '../components/KeyboardWrapper';
+//import KeyboardWrapper from '../components/KeyboardWrapper';
 import { useNavigation } from '@react-navigation/native';
-
 const Signup: React.FC = ()=>{
     const navigation = useNavigation();
     return(
         
-      <KeyboardWrapper style={styles.container}>
+      // <KeyboardAvoidingView style={styles.container}>
+      //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      //     <ScrollView contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps='handled'>
+           <View style={styles.container}>
 
         <Circle size={80} bgColor={colors.primary} textColor={colors.white}></Circle>
 
@@ -33,9 +35,13 @@ const Signup: React.FC = ()=>{
           <TouchableOpacity onPress={() => navigation.navigate('Login' as never)}>
             <Text style={styles.link}>Sign in</Text>
           </TouchableOpacity>
-
+         </View>
         </View>
-      </KeyboardWrapper>
+
+      // </ScrollView>
+      // </TouchableWithoutFeedback> 
+      // </KeyboardAvoidingView>
+       
     )
 }
 

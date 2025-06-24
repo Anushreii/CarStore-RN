@@ -4,3 +4,4 @@ export default {
   black: '#040415',
   grey:'#A8AFB9'
 };
+

@@ -5,20 +5,34 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import Circle from '../components/Circle';
 import color from '../constant/colors';
-import KeyboardWrapper from '../components/KeyboardWrapper';
+//import KeyboardWrapper from '../components/KeyboardWrapper';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 const Login: React.FC = () => {
   const navigation = useNavigation();
+  //const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+//  const handleLogin = () => {
+//   navigation.replace('Main'); // Goes to BottomTab
+// };
 
   return (
     
-    <KeyboardWrapper style={styles.container}>
+    // <KeyboardAvoidingView style={styles.container}>
+    //   <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+    //     <ScrollView contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps='handled'>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={color.white} />
 
      
@@ -34,7 +48,8 @@ const Login: React.FC = () => {
       
 
       <TouchableOpacity>
-      <Text style={styles.forgot}>Forgot Password?</Text></TouchableOpacity> 
+      <Text style={styles.forgot}>Forgot Password?</Text>
+      </TouchableOpacity> 
 
       
       <CustomButton
@@ -50,8 +65,11 @@ const Login: React.FC = () => {
         <TouchableOpacity onPress={() => navigation.navigate('Signup' as never)}>
           <Text style={styles.signupLink}>Sign Up</Text>
         </TouchableOpacity>
+        </View>
       </View>
-    </KeyboardWrapper>
+    //   </ScrollView>
+    //   </TouchableWithoutFeedback>
+    // </KeyboardAvoidingView>
   );
 };
 
