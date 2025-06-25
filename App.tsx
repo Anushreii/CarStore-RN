@@ -11,6 +11,8 @@ import HomeScreen from './src/screens/HomeScreen.tsx'
 import Profile from './src/screens/ProfileScreen.tsx'
 import Favorite from './src/screens/Favorite.tsx'
 import colors from './src/constant/colors.ts'
+import CarDetailsScreen from './src/screens/CarDetailScreen.tsx'
+import 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -26,9 +28,11 @@ const { width } = Dimensions.get('window');
     //<Signup/>
    // <HomeScreen/>
     //<HomeScreenFilter/>
-    //<AppNavigator />
+    //<AppNavigator/>
+    
 
     <NavigationContainer>
+      
       <Tab.Navigator screenOptions={({ route})=>({
         headerShown: false,
         tabBarShowLabel: false,
@@ -58,8 +62,7 @@ const { width } = Dimensions.get('window');
               style={[
                 styles.icon,
                 { tintColor: focused ? colors.primary : colors.grey },
-              ]}
-              /> 
+              ]}/> 
 
             )
            }
@@ -71,7 +74,7 @@ const { width } = Dimensions.get('window');
               <Image source={require('./src/assets/Tprofile.png')} 
               style={[
                 styles.icon,
-                { tintColor: focused ? colors.primary : colors.grey},
+                { tintColor: focused ? colors.primary : colors.grey}
               ]}
 
               /> 
@@ -83,6 +86,7 @@ const { width } = Dimensions.get('window');
        
       </Tab.Navigator>
    </NavigationContainer>
+   
 
      )
   }
@@ -93,10 +97,11 @@ const { width } = Dimensions.get('window');
     tabBar:{
      position:'absolute',
      //width: width * 0.45 ,
-     width:'100%',
+     width:'90%',
      bottom:25,
-    left:20,
-     right:20,
+     alignSelf:'center',
+    // left:20,
+    //  right:20,
      backgroundColor:colors.white,
      borderRadius:55,
      height:60,
@@ -106,10 +111,15 @@ const { width } = Dimensions.get('window');
      alignItems:'center',
      justifyContent:'space-around',
      flexDirection:'row',
-     paddingVertical:10, 
-     alignSelf:'center',
+      paddingVertical:10, 
+
+    
 
     },
+
+     
+
+
     icon:{
       width:28,
       height:28,
@@ -118,3 +128,20 @@ const { width } = Dimensions.get('window');
 
 
   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

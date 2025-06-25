@@ -23,11 +23,12 @@ const HomeScreenFilter = () =>{
             <View style={styles.row}>
                 <TouchableOpacity style={styles.dropdown}>
                     <Text style={styles.dropdowntext}>Model</Text>
-                    <Icon name="arrow-drop-down" size={20}></Icon>
+                    {/* <Icon name="arrow-drop-down" size={20}></Icon> */}
+                    
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.dropdown}>
                     <Text style={styles.dropdowntext}>Brand</Text>
-                    <Icon name="arrow-drop-down" size={20}></Icon>
+                    {/* <Icon name="arrow-drop-down" size={20}></Icon> */}
                 </TouchableOpacity>
             </View>
 

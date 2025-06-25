@@ -16,6 +16,9 @@ import colors from "../constant/colors";
 import { Modal } from "react-native";
 import HomeScreenFilter from "./HomeScreenFilter";
 import { useState } from "react";
+import FeaturedCard from "../components/FeaturedCard";
+import { FlatList } from 'react-native';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,6 +47,19 @@ const carData = [
  
 ];
 
+const featuredCars = [
+  {
+    image: require('../assets/Tesla.png'),
+    title: 'Tesla model 3 standard range plus',
+  },
+
+  {
+    image: require('../assets/Tesla.png'),
+    title: 'Tesla model 3 standard range plus'
+  }
+];
+
+
 const HomeScreen = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   return (
@@ -58,6 +74,7 @@ const HomeScreen = () => {
         <Text style={styles.logo}>CarStore</Text>
         <MaterialIcons name="notifications-none" size={24} color={colors.black} />
       </View>
+      
 
       {/* Search Bar */}
       <View style={styles.searchBarWrapper}>
@@ -65,31 +82,48 @@ const HomeScreen = () => {
           <Icon name="search" size={22} color={colors.grey} />
           <Text style={styles.searchPlaceholder}>Search for Honda Pilot 7-Passenger</Text>
         </View>
-        <TouchableOpacity onPress={()=> setFilterVisible(true)}>
-          <MaterialIcons name="tune" size={22} color={colors.black} style={styles.filterIcon} />
+        <TouchableOpacity onPress={()=> setFilterVisible(true)} style={styles.filterIcon}>
+          {/* <MaterialIcons name="tune" size={22} color={colors.black}  /> */}
+          <Image source={require('../assets/Filter.png')} style={styles.filterImg} resizeMode='contain'></Image>
         </TouchableOpacity>
       </View>
 
+     
+
+
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Featured Tesla */}
-        <View style={styles.featurescard}>
-          <Image source={require("../assets/Tesla.png")} style={styles.featuredimg} resizeMode="cover" />
+         {/* Featured Tesla  */}
+         
+         <View
+         style={styles.featureCardWrapper}>
+
+            <Image 
+          source={require("../assets/CornerRibbon.png")} 
+          style={styles.ribbinImg} />
+
+          <Image 
+          source={require("../assets/Tesla.png")} 
+          style={styles.featuredimg} resizeMode="cover" />
           {/* <Image source={require('../assets/smallrbn.png')} style={styles.smallrbn}></Image> */}
-          <Image source={require("../assets/ribbon.png")} style={styles.ribbinimg} />
-          <Text style={styles.ribbontxt}>Featured</Text>
+
+           {/* <Image source={require("../assets/Tesla2.png")} style={styles.featuredimg} resizeMode="cover"></Image> */}
+         
+
+           {/* {/* <Text style={styles.ribbontxt}>Featured</Text>   */}
           <View style={styles.captionWrap}>
             <Text style={styles.caption}>Tesla model 3 standard range plus</Text>
           </View>
-        </View>
+        </View>   
 
+       
         {/* Recommended */}
         <View style={styles.recommendHeader}>
           <Text style={styles.subsection}>Recommended</Text>
           <Text style={styles.seealltxt}>See all</Text>
         </View>
 
-        <View style={styles.gridContainer}>
-          {carData.map((car, index) => (
+        <View style={styles.gridContainer}>   
+          {carData.map((car, index) => ( 
             <View key={index} style={styles.card}>
               <View style={styles.view360Tag}>
                 <Text style={styles.view360Text}>360 View</Text>
@@ -113,7 +147,7 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      {/* bottom  bar */}
+{/* bottom  bar */}
       {/* <View style={styles.bottomBar}> */}
         {/* <TouchableOpacity style={styles.tabButton}> */}
           {/* <Image source={require("../assets/tab_home.png")} style={styles.tabIcon} /> */}
@@ -132,25 +166,22 @@ const HomeScreen = () => {
    
  
     
-  {/* Modal screen on FIlter Icon */}
-     
+    {/* Modal screen on FIlter Icon */}  
       <Modal visible={filterVisible}
       transparent
       animationType="slide"
       onRequestClose={()=> setFilterVisible(false)}>
 
-        <TouchableOpacity activeOpacity={1}
+    <TouchableOpacity activeOpacity={1}
         onPressOut={()=> setFilterVisible(false)}  
         style={{
           flex:1, 
         }}>
 
-        <TouchableOpacity activeOpacity={1}>
-          <HomeScreenFilter/>
-        </TouchableOpacity>
-
-        </TouchableOpacity>
-
+      <TouchableOpacity activeOpacity={1}>
+        <HomeScreenFilter/>
+      </TouchableOpacity>
+    </TouchableOpacity>
       </Modal>
 
     </View>
@@ -184,14 +215,17 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02,
   },
   searchBar: {
-    flexDirection: "row",
-    backgroundColor: "#F3F4F6",
-    borderRadius: 10,
-    padding: width * 0.04,
-    flex: 1,
-    marginRight: width * 0.02,
-    alignItems: "center",
-  },
+  flexDirection: "row",
+  alignItems: "center",
+  backgroundColor: "#EDEEEF",
+  borderRadius: 12,
+  height: 70,
+  width:300,
+  paddingHorizontal: 16,
+  flex: 1,
+  marginRight: 12,
+},
+
   searchPlaceholder: {
     flex: 1,
     marginLeft: width * 0.02,
@@ -202,47 +236,88 @@ const styles = StyleSheet.create({
   filterIcon: {
     padding: width * 0.025,
   },
+
+  filterImg:{
+      width:26,
+      height:17,
+  },
+
+  featureCardWrapper: {
+    position: "relative",
+    marginTop: height * 0.06,
+  },
+
   featurescard: {
     marginTop: height * 0.03,
     borderRadius: 10,
     position: "relative",
   },
   featuredimg: {
-    width: "100%",
-    height: height * 0.25,
+    width: 300,
+    // height: height * 0.25,
+    height:170,
     borderRadius: 10,
   },
-  ribbinimg: {
+
+  featureCard: {
+  width: width * 0.7, // 80% of screen width
+  marginRight: 16,    // space between cards 
+  borderRadius: 12,
+  overflow: 'hidden',
+  position: 'relative',
+},
+
+featuredImgFlat: {
+  width: '100%',
+  height: 170,
+  borderRadius: 12,
+},
+
+captionWrapFlat: {
+  position: "absolute",
+  bottom: 10,
+  left: 0,
+  right: 0,
+  justifyContent: "center",
+  alignItems: "center",
+},
+
+
+   ribbinImg: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    width: width * 0.28,
-    height: width * 0.28,
+    top: -5,
+    left: -10,
+    width: 100,
+    height: 100,
     resizeMode: "contain",
-    zIndex: 1,
+    zIndex: 5,
   },
-  ribbontxt: {
-    position: "absolute",
-    top: width * 0.09,
-    left: -width * 0.05,
-    transform: [{ rotate: "-45deg" }],
-    width: width * 0.3,
-    color: colors.white,
-    textAlign: "center",
-    fontSize: width * 0.04,
-    fontFamily: "Poppins-SemiBold",
-    fontWeight: "700",
-    zIndex: 2,
-  },
+
+  // ribbontxt: {
+  //   position: "absolute",
+  //   top: width * 0.09,
+  //   left: -width * 0.05,
+  //   transform: [{ rotate: "-45deg" }],
+  //   width: width * 0.3,
+  //   color: colors.white,
+  //   textAlign: "center",
+  //   fontSize: width * 0.04,
+  //   fontFamily: "Poppins-SemiBold",
+  //   fontWeight: "700",
+  //   zIndex: 2,
+  // },
+
   captionWrap: {
     position: "absolute",
-    top: 0,
-    bottom: 8,
+    top: 120,
+    bottom: -13,
     left: 0,
-    right: 0,
-    justifyContent: "flex-end",
+    right: 55,
+    justifyContent: "center",
     alignItems: "center",
   },
+
+
   caption: {
     fontSize: 14,
     color: colors.white,
@@ -265,36 +340,38 @@ const styles = StyleSheet.create({
   seealltxt: {
     fontSize: width * 0.040,
     color: colors.grey,
-    fontWeight: "700",
+    fontWeight: "500",
     fontFamily: "Poppins-Regular",
   },
   gridContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    rowGap: 30,
+    rowGap: 5,
   },
   card: {
     width: "48%",
+    height:250,
     backgroundColor: "#fff",
     borderRadius: 12,
     paddingBottom: 2 ,
     //paddingTop:10,
+  
   },
   view360Tag: {
     position: "absolute",
-    top: 10,
-    left: 10,
+    top: 8,
+    left: 8,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    //backgroundColor: "#fff",
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 6,
     zIndex: 2,
   },
   view360Text: {
-    fontSize: 10,
+    fontSize: 12,
     color: colors.primary,
     fontWeight: "700",
     marginRight: 3,
@@ -305,29 +382,29 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: "absolute",
-    top: 10,
+    top: 8,
     right: 10,
     zIndex: 2,
   },
   heartImg: {
-    width: 20,
-    height: 20,
+    width: 28,
+    height: 28,
   },
   cardImg: {
     width: "100%",
     height: 180,
-    resizeMode: "cover",
+    resizeMode: 'stretch',
     borderRadius: 12,
   },
   playIcon: {
     position: "absolute",
-    bottom: 60,
-    left: 10,
+    bottom: 70,
+    left: 8,
     zIndex: 2,
   },
   playImg: {
-    width: 17,
-    height: 17,
+    width: 20,
+    height: 20,
   },
   carTitle: {
     marginTop: 10,
@@ -383,8 +460,6 @@ const styles = StyleSheet.create({
   //   height: 45,
   //   resizeMode: "contain",
   // },
-
-  
 
   
 });

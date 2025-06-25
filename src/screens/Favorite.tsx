@@ -20,3 +20,25 @@ const styles = StyleSheet.create({
     fontSize: 18, fontWeight: 'bold'
   }
 });
+
+
+
+        // <FlatList
+        //   data={featuredCars}
+        //   horizontal
+        //   keyExtractor={(item, index) => index.toString()}
+        //   showsHorizontalScrollIndicator={false}
+        //   contentContainerStyle={{ paddingVertical: 20 }}
+        //   renderItem={({ item }) => (
+        //     <View style={styles.featureCard}>
+        //       <Image
+        //         source={require("../assets/CornerRibbon.png")}
+        //         style={styles.ribbinImg}
+        //       />
+        //       <Image source={item.image} style={styles.featuredImgFlat} resizeMode="cover" />
+        //       <View style={styles.captionWrapFlat}>
+        //         <Text style={styles.caption}>{item.title}</Text>
+        //       </View>
+        //     </View>
+        //   )}
+        // />
