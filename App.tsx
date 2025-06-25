@@ -17,117 +17,134 @@ import 'react-native-gesture-handler';
 const { width } = Dimensions.get('window');
 
 
-  const Tab = createBottomTabNavigator();
-  const App = () =>{  
-   return (    
+const Tab = createBottomTabNavigator();
+const App = () => {
+  return (
     // <Ionicons name={iconName} size={size} color={color} />;
 
     // <Splash/>
     //<Login/>
     //<AppNavigator />
     //<Signup/>
-   // <HomeScreen/>
+    // <HomeScreen/>
     //<HomeScreenFilter/>
     //<AppNavigator/>
-    
+
 
     <NavigationContainer>
-      
-      <Tab.Navigator screenOptions={({ route})=>({
+
+      <Tab.Navigator screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
-       
-       
+        
+
+
+
       })}>
         {/* <Tab.Screen name='Home' component={HomeScreen}></Tab.Screen> */}
         <Tab.Screen name='Home' component={HomeScreen} options={{
-        tabBarIcon:({focused})=>{
-          return(
-            <Image source={require('./src/assets/Thome.png')} 
-              style={[
-                styles.icon,
-                { tintColor: focused ? colors.primary : colors.grey },
-              ]} />
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image source={require('./src/assets/Thome.png')}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? colors.primary : colors.grey },
+                ]} />
 
-            //<Image source={{uri:'Thome.png'}} style={{width:20, height:20, backgroundColor:colors.primary}} ></Image>
-          )
-        }
+              //<Image source={{uri:'Thome.png'}} style={{width:20, height:20, backgroundColor:colors.primary}} ></Image>
+            )
+          }
         }}></Tab.Screen>
 
         <Tab.Screen name='Favorite' component={Favorite} options={{
-           tabBarIcon:({focused}) =>{
-            return(
-              <Image source={require('./src/assets/Theart.png')} 
-              style={[
-                styles.icon,
-                { tintColor: focused ? colors.primary : colors.grey },
-              ]}/> 
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image source={require('./src/assets/Theart.png')}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? colors.primary : colors.grey },
+                ]} />
 
             )
-           }
+          }
         }}></Tab.Screen>
-        
-       <Tab.Screen name='Profile' component={Profile} options={{
-           tabBarIcon:({focused}) =>{
-            return(
-              <Image source={require('./src/assets/Tprofile.png')} 
-              style={[
-                styles.icon,
-                { tintColor: focused ? colors.primary : colors.grey}
-              ]}
 
-              /> 
+        <Tab.Screen name='Profile' component={Profile} options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image source={require('./src/assets/Tprofile.png')}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? colors.primary : colors.grey }
+                ]}
+
+              />
 
             )
-           }
+          }
         }}></Tab.Screen>
-       {/* <Tab.Screen name='Login' component={Login}></Tab.Screen> */}
-       
+        {/* <Tab.Screen name='Login' component={Login}></Tab.Screen> */}
+
       </Tab.Navigator>
-   </NavigationContainer>
-   
+    </NavigationContainer>
 
-     )
-  }
 
-  export default App;
+  )
+}
 
-  const styles = StyleSheet.create({
-    tabBar:{
-     position:'absolute',
-     //width: width * 0.45 ,
-     width:'90%',
-     bottom:25,
-     alignSelf:'center',
-    // left:20,
-    //  right:20,
-     backgroundColor:colors.white,
-     borderRadius:55,
-     height:60,
-     elevation:10,
-     shadowColor:"#3232470D",
-     shadowRadius:5,
-     alignItems:'center',
-     justifyContent:'space-around',
-     flexDirection:'row',
-      paddingVertical:10, 
+export default App;
 
+const styles = StyleSheet.create({
+  // tabBar: {
+  //   position: 'relative',
+  //   width: '85%',
+  //   bottom: 40,
+  //   backgroundColor: colors.white,
+  //   // backgroundColor:'tranparent',
+  //   borderRadius: 55,
+  //   height: 60,
+    
+  //   // shadowColor: "#3232470D",
+  //   elevation: 10,
+
+  //   alignItems: 'center',
+  //   justifyContent: 'space-around',
+  //   flexDirection: 'row',
+  //   paddingVertical: 10,
+  //   alignSelf : 'center', 
+  //   right:0
+  // left :0,
     
 
-    },
-
-     
+  // },
 
 
-    icon:{
-      width:28,
-      height:28,
-      resizeMode:'contain',
-    },
+tabBar: {
+  position: 'absolute',
+  bottom: 20,
+  width:'90%',
+  left: 0,
+  right: 0,
+  height: 62,
+  marginHorizontal: 22, 
+  backgroundColor: colors.white,
+  borderRadius: 40,
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  elevation: 10,
+  zIndex: 100,
+},
+
+  icon: {
+    width: 28,
+    height: 28,
+    resizeMode: 'contain',
+  },
 
 
-  })
+})
 
 
 
@@ -143,5 +160,3 @@ const { width } = Dimensions.get('window');
 
 
 
-
-  

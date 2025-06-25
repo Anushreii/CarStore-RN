@@ -8,16 +8,17 @@ const { width, height } = Dimensions.get('window');
 const FeaturedCard = ({ image, title }: { image: any; title: string }) => {
   return (
     <View style={styles.cardWrapper}>
-      {/* Card Image */}
-      <Image source={require('../assets/Tesla.png')} style={styles.image} />
+     
+      {/* <Image source={require('../assets/Tesla.png')} style={styles.image} /> */}
+      <Image source={image} style={styles.image} />
 
-      {/* Ribbon Image */}
+
+      {/* Ribbon  */}
       <Image
         source={require('../assets/CornerRibbon.png')}
         style={styles.ribbon}
       />
 
-      {/* Caption Centered */}
       <View style={styles.captionContainer}>
         <Text style={styles.caption}>{title}</Text>
       </View>
@@ -27,34 +28,43 @@ const FeaturedCard = ({ image, title }: { image: any; title: string }) => {
 
 export default FeaturedCard;
 
+const CARD_WIDTH  = width * 0.7;
+const PEEK_SPACE  = width * 0.06;
+
 const styles = StyleSheet.create({
   cardWrapper: {
-    width: width * 0.8,
-    marginTop: height * 0.04,
-    height: 180,
+    // width: width * 0.8,
+    width:CARD_WIDTH,
+    marginRight: PEEK_SPACE,
+    marginTop: height * 0.02,
+    height: 150,
     borderRadius: 12,
-    marginRight: 20,
     position: 'relative',
-    overflow: 'hidden',
+    //overflow: 'hidden',
+    backgroundColor:'#FFF'
   },
+
   image: {
-    width: 300,
+    width: 280,
     // width: '100%',
     height:170,
     borderRadius: 12,
+    
+    
   },
   ribbon: {
     position: "absolute",
-    top: -5,
-    left: -10,
+    top: -11,
+    left: -15,
     width: 100,
     height: 100,
     resizeMode: "contain",
     zIndex: 5,
   },
+
   captionContainer: {
     position: 'absolute',
-    bottom: 10,
+    bottom: -8,
     left: 0,
     right: 0,
     alignItems: 'center',
@@ -80,3 +90,5 @@ const styles = StyleSheet.create({
   showsHorizontalScrollIndicator={false}
   contentContainerStyle={{ paddingVertical: 20 }}
 /> */}
+
+

@@ -14,13 +14,17 @@ import Icon from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import colors from "../constant/colors";
 import { Modal } from "react-native";
-import HomeScreenFilter from "./HomeScreenFilter";
+import FilterTabsNavigator from "../components/FilterTabNavigator";
 import { useState } from "react";
 import FeaturedCard from "../components/FeaturedCard";
 import { FlatList } from 'react-native';
+import HomeScreenFilter from "./HomeScreenFilter";
 
 
 const { width, height } = Dimensions.get("window");
+
+
+
 
 const carData = [
   {
@@ -52,12 +56,16 @@ const featuredCars = [
     image: require('../assets/Tesla.png'),
     title: 'Tesla model 3 standard range plus',
   },
-
   {
-    image: require('../assets/Tesla.png'),
-    title: 'Tesla model 3 standard range plus'
-  }
+    image: require('../assets/car2.png'),
+    title: 'Mahindra Thar LX 4WD Diesel',
+  },
+  {
+    image: require('../assets/thar.png'),
+    title: 'Audi Q7 Premium Plus',
+  },
 ];
+
 
 
 const HomeScreen = () => {
@@ -92,7 +100,7 @@ const HomeScreen = () => {
 
 
       <ScrollView showsVerticalScrollIndicator={false}>
-         {/* Featured Tesla  */}
+         {/* Featured Tesla  
          
          <View
          style={styles.featureCardWrapper}>
@@ -109,11 +117,28 @@ const HomeScreen = () => {
            {/* <Image source={require("../assets/Tesla2.png")} style={styles.featuredimg} resizeMode="cover"></Image> */}
          
 
-           {/* {/* <Text style={styles.ribbontxt}>Featured</Text>   */}
+           {/* {/* <Text style={styles.ribbontxt}>Featured</Text>   
           <View style={styles.captionWrap}>
             <Text style={styles.caption}>Tesla model 3 standard range plus</Text>
           </View>
-        </View>   
+        </View>    */}
+
+        <FlatList
+          data={featuredCars}
+          keyExtractor={(_, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <FeaturedCard image={item.image} title={item.title} />
+
+          )}
+          contentContainerStyle={{
+            paddingVertical: height * 0.04,
+            paddingLeft: 10,
+            
+          }}
+        />
+
 
        
         {/* Recommended */}
@@ -165,8 +190,42 @@ const HomeScreen = () => {
       {/* </View> */}
    
  
-    
-    {/* Modal screen on FIlter Icon */}  
+      <Modal
+        visible={filterVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setFilterVisible(false)}
+      >
+        <TouchableOpacity
+          style={{ flex: 1, }}
+          activeOpacity={1}
+          onPressOut={() => setFilterVisible(false)}
+        >
+          <View style={{ height: '67%', marginTop: 100, marginHorizontal: 20 }}>
+            <TouchableOpacity activeOpacity={1}>
+              <View style={{
+                height: '100%',
+                borderRadius:10,
+                // borderBottomLeftRadius:10,
+                // borderBottomRightRadius:10,
+                // backgroundColor: '#FFF',
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 5,
+                overflow: 'hidden'
+}}>      
+              <HomeScreenFilter />
+              </View>
+            </TouchableOpacity>
+            
+          </View>
+        </TouchableOpacity>
+      </Modal>
+      
+
+
+
+
+    {/* Modal screen on FIlter Icon   
       <Modal visible={filterVisible}
       transparent
       animationType="slide"
@@ -182,7 +241,7 @@ const HomeScreen = () => {
         <HomeScreenFilter/>
       </TouchableOpacity>
     </TouchableOpacity>
-      </Modal>
+      </Modal>*/}
 
     </View>
   );
@@ -260,8 +319,8 @@ const styles = StyleSheet.create({
   },
 
   featureCard: {
-  width: width * 0.7, // 80% of screen width
-  marginRight: 16,    // space between cards 
+  width: width * 0.7, 
+  marginRight: 16,    
   borderRadius: 12,
   overflow: 'hidden',
   position: 'relative',
@@ -326,7 +385,7 @@ captionWrapFlat: {
     textAlign: "center",
   },
   recommendHeader: {
-    marginTop: height * 0.04,
+    marginTop: height * 0.02,
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
@@ -350,14 +409,14 @@ captionWrapFlat: {
     rowGap: 5,
   },
   card: {
-    width: "48%",
+    width: "49%",
     height:250,
     backgroundColor: "#fff",
     borderRadius: 12,
     paddingBottom: 2 ,
     //paddingTop:10,
   
-  },
+  }, 
   view360Tag: {
     position: "absolute",
     top: 8,
