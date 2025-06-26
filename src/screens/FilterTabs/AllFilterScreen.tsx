@@ -1,4 +1,4 @@
-// src/screens/FilterTabs/AllFilterScreen.tsx
+
 import React, { useState } from 'react';
 import {
   View,
@@ -7,18 +7,15 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Dimensions,
 } from 'react-native';
-import colors from '../../constant/colors';   
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-const { width } = Dimensions.get('window');
+import colors from '../../constant/colors';
+import SliderComponent from '../../components/Slider';
 
 const AllFilterScreen: React.FC = () => {
-  // const [priceRange] = useState({ min: 0, max: 3_000_000 });
+  const [price, setPrice] = useState(0);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.modalContainer}>
       
       <View style={styles.row}>
         <TouchableOpacity style={styles.dropdown}>
@@ -40,18 +37,38 @@ const AllFilterScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      
       <View style={styles.locationInput}>
-        {/* <Icon name="location-on" size={20} color={colors.grey} /> */}
-        <Image source={require('./FilterTabAssets/location.png')} ></Image>
+        <Image
+          source={require('./FilterTabAssets/location.png')}
+          style={styles.locationIcon}
+        />
         <TextInput
           placeholder="Location"
-          placeholderTextColor={colors.grey}
+          placeholderTextColor="#A9A9A9"
           style={styles.input}
         />
       </View>
 
-      {/* ────────────── PRICE RANGE ──────────────
+      <SliderComponent price={price} onChange={setPrice} />
+
+      
+{/* <Text style={styles.priceLabel}>Price Range</Text>
+      <Text style={styles.priceTxt}>Rs. 0 - Rs {Price.toLocaleString('en-IN')}</Text>
+
+      <Slider style={styles.slider}
+      minimumValue={0}
+      maximumValue={3_000_000_00}
+      step={1000}
+      value={Price}
+      onValueChange={handlepricechange}
+      minimumTrackTintColor={colors.primary}
+      maximumTrackTintColor='#E5E5E5'
+      thumbTintColor={colors.primary}>
+
+      </Slider> */}
+
+
+      {/*
       <Text style={styles.priceLabel}>Price Range</Text>
       <Text style={styles.priceValue}>
         Rs. {priceRange.min.toLocaleString()} - Rs.{' '}
@@ -59,17 +76,10 @@ const AllFilterScreen: React.FC = () => {
           minimumFractionDigits: 2,
         })}
       </Text> */}
-{/* 
-      {/* (Static) Slider track with two orange handles 
-      <View style={styles.sliderTrack}>
-        <View style={styles.sliderHandle} />
-        <View style={styles.sliderHandle} />
-      </View>
 
-      {/* ────────────── SEARCH BUTTON ────────────── 
       <TouchableOpacity style={styles.searchBtn}>
         <Text style={styles.searchTxt}>Search</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -77,15 +87,24 @@ const AllFilterScreen: React.FC = () => {
 export default AllFilterScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 20,
-    backgroundColor:'#FFFFFF',
-    marginTop:20,
-  },
+modalContainer: {
+  // backgroundColor: '#FFFFFF',
+  backgroundColor:colors.primary,
+  // borderRadius: 10,
+  padding: 34,
+  width: '100%',
+  height:500,           
+  alignSelf: 'center',    
+  // elevation: 6,
+  // shadowColor: '#000',
+  
+},
 
-  row: 
-  { flexDirection: 'row', justifyContent: 'space-between' },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
 
   dropdown: {
     flex: 1,
@@ -96,25 +115,34 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 5,
-    color:colors.black,
   },
-
+  
   dropdownText: {
     color: '#A9A9A9',
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
     fontWeight: '500',
   },
-  arrow: { width: 14, height: 14, tintColor: colors.grey },
 
-  
+  arrow: {
+    width: 16,
+    height: 16,
+  },
+
   locationInput: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F9FAFB',
     borderRadius: 8,
     padding: 12,
+    marginBottom: 20,
   },
+
+  locationIcon: {
+    width: 16,
+    height: 20,
+  },
+
   input: {
     flex: 1,
     marginLeft: 8,
@@ -122,8 +150,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: colors.black,
   },
-
- 
-
   
+  searchBtn: {
+  backgroundColor: colors.primary,
+  paddingVertical: 12,
+  paddingHorizontal: 40,  
+  borderRadius: 10,
+  alignSelf: 'center',   
+  marginTop: 60,
+},
+
+  searchTxt: {
+    color: colors.white,
+    fontFamily: 'Poppins-Bold',
+    fontSize: 16,
+  }, 
 });

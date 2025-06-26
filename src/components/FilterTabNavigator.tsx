@@ -21,7 +21,7 @@ const FilterTabsNavigator = ()=>{
             height:3,
             // borderRadius:2
         },
-        tabBarLabelStyle: { fontWeight:'600',
+        tabBarLabelStyle: { fontWeight:'900',
              fontSize: 18,
             //  fontFamily:'Poppins-Bold',
               textTransform:'none'

@@ -12,13 +12,14 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name="CarDetailScreen" component={CarDetailsScreen} options={{ title: "Car Details" }} /> */}
         <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup}/>
-        {/* <Stack.Screen name="CarDetailScreen" component={CarDetailsScreen}/> */}
+        <Stack.Screen name="Login" component={Login} /> 
+        <Stack.Screen name="Signup" component={Signup}/> 
+        <Stack.Screen name="CarDetailsScreen" component={CarDetailsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  ); 
 };
 
 export default AppNavigator;

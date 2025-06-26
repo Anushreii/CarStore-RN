@@ -16,10 +16,17 @@ import 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
+const dummyCar = {
+  image: require('./src/assets/swift.png'),
+  title: 'Audi e-tron Premium',
+  price: 'Rs. 54,77,823.73',
+};
+
 
 const Tab = createBottomTabNavigator();
 const App = () => {
   return (
+   
     // <Ionicons name={iconName} size={size} color={color} />;
 
     // <Splash/>
@@ -32,14 +39,13 @@ const App = () => {
 
 
     <NavigationContainer>
+      
 
       <Tab.Navigator screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
         
-
-
 
       })}>
         {/* <Tab.Screen name='Home' component={HomeScreen}></Tab.Screen> */}
@@ -86,13 +92,14 @@ const App = () => {
         }}></Tab.Screen>
         {/* <Tab.Screen name='Login' component={Login}></Tab.Screen> */}
 
+        
+
       </Tab.Navigator>
     </NavigationContainer>
 
 
   )
 }
-
 export default App;
 
 const styles = StyleSheet.create({
@@ -148,7 +155,22 @@ tabBar: {
 
 
 
+// import React from 'react';
+// import CarDetailsScreen from './src/screens/CarDetailScreen.tsx';
 
+// const dummyCar = {
+//   image: require('./src/assets/swift.png'),
+//   title: 'Audi e-tron Premium',
+//   price: 'Rs. 54,77,823.73',
+// };
+
+// const App = () => {
+//   return (
+//     <CarDetailsScreen route={{ params: { car: dummyCar } }} />
+//   );
+// };
+
+// export default App;
 
 
 

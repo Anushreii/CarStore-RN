@@ -19,10 +19,10 @@ import { useState } from "react";
 import FeaturedCard from "../components/FeaturedCard";
 import { FlatList } from 'react-native';
 import HomeScreenFilter from "./HomeScreenFilter";
+import { useNavigation } from "@react-navigation/native";
 
 
 const { width, height } = Dimensions.get("window");
-
 
 
 
@@ -56,6 +56,7 @@ const featuredCars = [
     image: require('../assets/Tesla.png'),
     title: 'Tesla model 3 standard range plus',
   },
+  
   {
     image: require('../assets/car2.png'),
     title: 'Mahindra Thar LX 4WD Diesel',
@@ -131,16 +132,14 @@ const HomeScreen = () => {
           renderItem={({ item }) => (
             <FeaturedCard image={item.image} title={item.title} />
 
+
           )}
           contentContainerStyle={{
             paddingVertical: height * 0.04,
             paddingLeft: 10,
             
-          }}
-        />
-
-
-       
+          }} 
+        />       
         {/* Recommended */}
         <View style={styles.recommendHeader}>
           <Text style={styles.subsection}>Recommended</Text>
@@ -149,7 +148,7 @@ const HomeScreen = () => {
 
         <View style={styles.gridContainer}>   
           {carData.map((car, index) => ( 
-            <View key={index} style={styles.card}>
+            <TouchableOpacity key={index} style={styles.card}>
               <View style={styles.view360Tag}>
                 <Text style={styles.view360Text}>360 View</Text>
                 <Image source={require("../assets/view360.png")} style={styles.view360Icon} />
@@ -167,7 +166,7 @@ const HomeScreen = () => {
 
               <Text style={styles.carTitle}>{car.title}</Text>
               <Text style={styles.carPrice}>{car.price}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
@@ -201,18 +200,18 @@ const HomeScreen = () => {
           activeOpacity={1}
           onPressOut={() => setFilterVisible(false)}
         >
-          <View style={{ height: '67%', marginTop: 100, marginHorizontal: 20 }}>
+          <View style={{ height: '67%', marginTop: 100, marginHorizontal: 20, width:"85%", borderRadius:10, }}>
             <TouchableOpacity activeOpacity={1}>
               <View style={{
-                height: '100%',
-                borderRadius:10,
+                height: '100%', 
+                // borderRadius:10,
                 // borderBottomLeftRadius:10,
                 // borderBottomRightRadius:10,
                 // backgroundColor: '#FFF',
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 5,
+                // borderTopLeftRadius: 20,
+                // borderTopRightRadius: 5,
                 overflow: 'hidden'
-}}>      
+                }}>      
               <HomeScreenFilter />
               </View>
             </TouchableOpacity>
@@ -249,6 +248,183 @@ const HomeScreen = () => {
 
 
 export default HomeScreen;
+
+// import React, { useState } from "react";
+// import {
+//   View,
+//   StyleSheet,
+//   Text,
+//   StatusBar,
+//   ScrollView,
+//   Image,
+//   TouchableOpacity,
+//   Dimensions,
+//   TextInput,
+//   Modal, 
+//   FlatList,
+// } from "react-native";
+
+// import Icon from "react-native-vector-icons/Feather";
+// import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+// import colors from "../constant/colors";
+// import FilterTabsNavigator from "../components/FilterTabNavigator";
+// import FeaturedCard from "../components/FeaturedCard";
+// import HomeScreenFilter from "./HomeScreenFilter";
+// import CarDetailsScreen from "./CarDetailScreen";
+
+
+// const { width, height } = Dimensions.get("window");
+
+
+// const carData = [
+//   {
+//     image: require("../assets/swift.png"),
+//     title: "Audi e-tron Premium",
+//     price: "Rs. 54,77,823.73",
+//   },
+//   {
+//     image: require("../assets/audi.png"),
+//     title: "Suzuki Swift",
+//     price: "Rs. 5,85,000",
+//   },
+//   {
+//     image: require("../assets/thar.png"),
+//     title: "Thar 4x4",
+//     price: "Rs. 15,00,000",
+//   },
+//   {
+//     image: require("../assets/baleno.png"),
+//     title: "Maruti Baleno",
+//     price: "Rs. 8,50,000",
+//   },
+// ];
+
+// const featuredCars = [
+//   {
+//     image: require("../assets/Tesla.png"),
+//     title: "Tesla model 3 standard range plus",
+//   },
+//   {
+//     image: require("../assets/car2.png"),
+//     title: "Mahindra Thar LX 4WD Diesel",
+//   },
+//   {
+//     image: require("../assets/thar.png"),
+//     title: "Audi Q7 Premium Plus",
+//   },
+// ];
+
+// ✅ HomeScreen receives `navigation` from props
+// const HomeScreen = ({ navigation }) => {
+//   const [filterVisible, setFilterVisible] = useState(false);
+
+//   return (
+//     <View style={styles.container}>
+//       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+
+//       {/* Top Bar */}
+//       <View style={styles.topBar}>
+//         <Icon name="menu" size={24} color={colors.black} />
+//         <Text style={styles.logo}>CarStore</Text>
+//         <MaterialIcons name="notifications-none" size={24} color={colors.black} />
+//       </View>
+
+//       <View style={styles.searchBarWrapper}>
+//         <View style={styles.searchBar}>
+//           <Icon name="search" size={22} color={colors.grey} />
+//           <Text style={styles.searchPlaceholder}>Search for Honda Pilot 7-Passenger</Text>
+//         </View>
+//         <TouchableOpacity onPress={() => setFilterVisible(true)} style={styles.filterIcon}>
+//           <Image source={require("../assets/Filter.png")} style={styles.filterImg} resizeMode="contain" />
+//         </TouchableOpacity>
+//       </View>
+
+//       <ScrollView showsVerticalScrollIndicator={false}>
+       
+//         <FlatList
+//           data={featuredCars}
+//           keyExtractor={(_, index) => index.toString()}
+//           horizontal
+//           showsHorizontalScrollIndicator={false}
+//           renderItem={({ item }) => (
+//             <FeaturedCard image={item.image} title={item.title} />
+//           )}
+//           contentContainerStyle={{
+//             paddingVertical: height * 0.04,
+//             paddingLeft: 10,
+//           }}
+//         />
+
+//         {/* Recommended */}
+//         <View style={styles.recommendHeader}>
+//           <Text style={styles.subsection}>Recommended</Text>
+//           <Text style={styles.seealltxt}>See all</Text>
+//         </View>
+
+//         <View style={styles.gridContainer}>
+//           {carData.map((car, index) => (
+//             <TouchableOpacity
+//               key={index}
+//               style={styles.card}
+//               onPress={() => navigation.navigate("CarDetailsScreen", { car })} // ADDED navigation
+//             >
+//               <View style={styles.view360Tag}>
+//                 <Text style={styles.view360Text}>360 View</Text>
+//                 <Image source={require("../assets/view360.png")} style={styles.view360Icon} />
+//               </View>
+
+//               <TouchableOpacity style={styles.heartIcon}>
+//                 <Image source={require("../assets/Heart1.png")} style={styles.heartImg} />
+//               </TouchableOpacity>
+
+//               <Image source={car.image} style={styles.cardImg} />
+
+//               <TouchableOpacity style={styles.playIcon}>
+//                 <Image source={require("../assets/playIcon.png")} style={styles.playImg} />
+//               </TouchableOpacity>
+
+//               <Text style={styles.carTitle}>{car.title}</Text>
+//               <Text style={styles.carPrice}>{car.price}</Text>
+//             </TouchableOpacity>
+//           ))}
+//         </View>
+//       </ScrollView>
+
+
+//       <Modal
+//         visible={filterVisible}
+//         transparent
+//         animationType="slide"
+//         onRequestClose={() => setFilterVisible(false)}
+//       >
+//         <TouchableOpacity
+//           style={{ flex: 1 }}
+//           activeOpacity={1}
+//           onPressOut={() => setFilterVisible(false)}
+//         >
+//           <View style={{ height: "67%", marginTop: 100, marginHorizontal: 20, width: "100%", borderRadius: 10 }}>
+//             <TouchableOpacity activeOpacity={1}>
+//               <View
+//                 style={{
+//                   height: "100%",
+//                   borderRadius: 10,
+//                   borderTopLeftRadius: 20,
+//                   borderTopRightRadius: 5,
+//                   overflow: "hidden",
+//                 }}
+//               >
+//                 <HomeScreenFilter />
+//               </View>
+//             </TouchableOpacity>
+//           </View>
+//         </TouchableOpacity>
+//       </Modal>
+//     </View>
+//   );
+// };
+
+// export default HomeScreen;
+
 
 const styles = StyleSheet.create({
   container: {
