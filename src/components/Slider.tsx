@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import colors from '../constant/colors';
-import Mu
+
 interface Props {
   price: number;
   onChange: (value: number) => void;

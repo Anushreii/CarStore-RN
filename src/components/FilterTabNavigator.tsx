@@ -31,7 +31,7 @@ const FilterTabsNavigator = ()=>{
             tabBarInactiveTintColor:'#FFCC99',
             tabBarStyle:{
                  backgroundColor:'#FFF',
-                 elevation:0, 
+                //  elevation:0, 
             }
       }}>
         <Tab.Screen name="All" component={AllFilterScreen}></Tab.Screen>
@@ -43,3 +43,22 @@ const FilterTabsNavigator = ()=>{
 }
 
 export default FilterTabsNavigator;
+
+
+// export default function FilterTabsNavigator() {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={{
+//         tabBarIndicatorStyle: { backgroundColor: colors.primary, height: 3 },
+//         tabBarLabelStyle: { fontFamily: 'Poppins-SemiBold' },
+//         tabBarActiveTintColor: colors.primary,
+//         tabBarInactiveTintColor: '#777',
+//         tabBarStyle: { elevation: 0 },          
+//       }}
+//     >
+//       <Tab.Screen name="All" component={AllFilterScreen} />
+//       <Tab.Screen name="New" component={NewFilterScreen} />
+//       <Tab.Screen name='Used' component={UsedFilterScreen}/>
+//     </Tab.Navigator>
+//   );
+// }

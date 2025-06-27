@@ -1,215 +1,178 @@
+// components/FilterForm.tsx
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  ScrollView,
+  View, Text, TouchableOpacity, TextInput, Image, StyleSheet
 } from 'react-native';
-import Slider from '@react-native-community/slider';
 import colors from '../constant/colors';
+import SliderComponent from './Slider';
 
-const MODELS = ['SUV', 'Sedan', 'Hatchback'];
-const BRANDS = ['Tesla', 'Mahindra', 'Audi'];
+interface Props {
+  modelOptions: string[];
+  brandOptions: string[];
+  onSearch?: (filters: any) => void; // Optional callback if needed
+}
 
-type Props = {
-  /** callback from parent (All / New / Used) */
-  onSearch?: (filters: {
-    model: string;
-    brand: string;
-    min: number;
-    max: number;
-    location: string;
-  }) => void;
-};
+const FilterForm: React.FC<Props> = ({ modelOptions, brandOptions, onSearch }) => {
+  const [price, setPrice] = useState(0);
+  const [selectedModel, setSelectedModel] = useState('Model');
+  const [selectedBrand, setSelectedBrand] = useState('Brand');
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
+  const [showBrandDropdown, setShowBrandDropdown] = useState(false);
 
-const FilterContent: React.FC<Props> = ({ onSearch }) => {
-  /** dropdown state */
-  const [modelOpen, setModelOpen]   = useState(false);
-  const [brandOpen, setBrandOpen]   = useState(false);
-  const [model, setModel]           = useState('Model');
-  const [brand, setBrand]           = useState('Brand');
-
-  /** range-slider state (TWO thumbs) */
-  const [minPrice, setMinPrice]     = useState(0);
-  const [maxPrice, setMaxPrice]     = useState(3_000_000);
-
-  /** location text */
-  const [location, setLocation]     = useState('');
-
-  /* helper for formatting Rs.  */
-  const fmt = (v:number) =>
-    v.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  const dropdownList = (data: string[], onSelect: (v: string) => void) => (
+    <View style={styles.dropdownList}>
+      {data.map((item) => (
+        <TouchableOpacity key={item} style={styles.dropdownItem} onPress={() => onSelect(item)}>
+          <Text style={styles.dropdownItemText}>{item}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.container}
-    >
-
+    <View style={styles.modalContainer}>
       <View style={styles.row}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => {
-            setModelOpen(!modelOpen);
-            brandOpen && setBrandOpen(false);
-          }}>
-          <Text style={styles.dropdownText}>{model}</Text>
-          <Image source={require('../screens/FilterTabs/FilterTabAssets')} style={styles.arrow} />
-        </TouchableOpacity>
+        {/* Model Dropdown */}
+        <View style={{ flex: 1, marginHorizontal: 5 }}>
+          <TouchableOpacity
+            style={styles.dropdown}
+            onPress={() => {
+              setShowModelDropdown(!showModelDropdown);
+              setShowBrandDropdown(false);
+            }}>
+            <Text style={styles.dropdownText}>{selectedModel}</Text>
+            <Image source={require('../screens/FilterTabs/FilterTabAssets/arrow.png')} style={styles.arrow} />
+          </TouchableOpacity>
+          {showModelDropdown && dropdownList(modelOptions, (v) => {
+            setSelectedModel(v);
+            setShowModelDropdown(false);
+          })}
+        </View>
 
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => {
-            setBrandOpen(!brandOpen);
-            modelOpen && setModelOpen(false);
-          }}>
-          <Text style={styles.dropdownText}>{brand}</Text>
-          <Image source={require('../screens/FilterTabs/FilterTabAssets')} style={styles.arrow} />
-        </TouchableOpacity>
+        {/* Brand Dropdown */}
+        <View style={{ flex: 1, marginHorizontal: 5 }}>
+          <TouchableOpacity
+            style={styles.dropdown}
+            onPress={() => {
+              setShowBrandDropdown(!showBrandDropdown);
+              setShowModelDropdown(false);
+            }}>
+            <Text style={styles.dropdownText}>{selectedBrand}</Text>
+            <Image source={require('../screens/FilterTabs/FilterTabAssets/arrow.png')} style={styles.arrow} />
+          </TouchableOpacity>
+          {showBrandDropdown && dropdownList(brandOptions, (v) => {
+            setSelectedBrand(v);
+            setShowBrandDropdown(false);
+          })}
+        </View>
       </View>
 
-      {/* MODEL menu (dummy) */}
-      {modelOpen && (
-        <View style={styles.menu}>
-          {MODELS.map(m => (
-            <TouchableOpacity key={m} onPress={()=>{setModel(m);setModelOpen(false);}}>
-              <Text style={styles.menuItem}>{m}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-
-      {/* BRAND menu (dummy) */}
-      {brandOpen && (
-        <View style={styles.menu}>
-          {BRANDS.map(b => (
-            <TouchableOpacity key={b} onPress={()=>{setBrand(b);setBrandOpen(false);}}>
-              <Text style={styles.menuItem}>{b}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-
+      {/* Location Input */}
       <View style={styles.locationInput}>
-        <Image
-          source={require('./FilterTabAssets/location.png')}
-          style={styles.locationIcon}
-        />
-        <TextInput
-          value={location}
-          onChangeText={setLocation}
-          placeholder="Location"
-          placeholderTextColor="#A9A9A9"
-          style={styles.input}
-        />
+        <Image source={require('../screens/FilterTabs/FilterTabAssets/location.png')} style={styles.locationIcon} />
+        <TextInput placeholder="Location" placeholderTextColor="#A9A9A9" style={styles.input} />
       </View>
 
-      {/* double-slider */}
-      <Text style={styles.priceLabel}>Price range</Text>
-      <Text style={styles.priceText}>
-        Rs. {fmt(minPrice)} – Rs. {fmt(maxPrice)}
-      </Text>
+      {/* Price Slider */}
+      <SliderComponent price={price} onChange={setPrice} />
 
-      {/* lower thumb – MIN */}
-      <Slider
-        style={styles.slider}
-        minimumValue={0}
-        maximumValue={maxPrice - 10_000}
-        value={minPrice}
-        step={10_000}
-        onValueChange={setMinPrice}
-        minimumTrackTintColor="#E5E5E5"
-        maximumTrackTintColor="#E5E5E5"
-        thumbTintColor={colors.primary}
-      />
-
-      {/* upper thumb – MAX (drawn on top so its knob is visible) */}
-      <Slider
-        style={[styles.slider, StyleSheet.absoluteFill]}
-        minimumValue={minPrice + 10_000}
-        maximumValue={3_000_000}
-        value={maxPrice}
-        step={10_000}
-        onValueChange={setMaxPrice}
-        minimumTrackTintColor="#E5E5E5"
-        maximumTrackTintColor="#E5E5E5"
-        thumbTintColor={colors.primary}
-      />
-
-      {/* --- search button ---------------------------------------------- */}
+      {/* Search Button */}
       <TouchableOpacity
         style={styles.searchBtn}
-        onPress={() =>
-          onSearch?.({ model, brand, min: minPrice, max: maxPrice, location })
-        }>
+        onPress={() => {
+          onSearch?.({ price, selectedModel, selectedBrand });
+        }}>
         <Text style={styles.searchTxt}>Search</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
-export default FilterContent;
+export default FilterForm;
 
 const styles = StyleSheet.create({
-  container: { padding: 20, paddingBottom: 60, backgroundColor: '#FFF' },
-
-  row: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 18 },
-  dropdown: {
-    flex: 1,
-    backgroundColor: '#F9FAFB',
-    padding: 12,
-    borderRadius: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 5,
-  },
-  dropdownText: { color: '#A9A9A9', fontSize: 14, fontFamily: 'Poppins-Regular' },
-  arrow: { width: 16, height: 16 },
-
-  menu: {
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 5,
-    marginBottom: 10,
-    borderRadius: 8,
-    overflow: 'hidden',
-    elevation: 2,
-  },
-  menuItem: {
-    padding: 10,
-    fontFamily: 'Poppins-Regular',
-    fontSize: 14,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#E5E5E5',
-  },
-
-  /* location -------------------------------------------------------- */
-  locationInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F9FAFB',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 20,
-  },
-  locationIcon: { width: 16, height: 20 },
-  input: { flex: 1, marginLeft: 8, fontSize: 14, fontFamily: 'Poppins-Regular' },
-
-  priceLabel: { fontFamily: 'Poppins-Bold', fontSize: 18, marginBottom: 4 },
-  priceText : { fontFamily: 'Poppins-Regular', fontSize: 14, color: colors.grey },
-  slider    : { width: '100%', height: 45 },
-
+    modalContainer: {
+      backgroundColor: '#fff',
+      padding: 34,
+      width: '100%',
+      height: 500,
+      alignSelf: 'center',
+    },
   
-  searchBtn : {
-    alignSelf: 'center',
-    marginTop: 30,
-    paddingVertical: 12,
-    paddingHorizontal: 60,
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-  },
-  searchTxt : { color: '#FFF', fontFamily: 'Poppins-Bold', fontSize: 16 },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 20,
+    },
+  
+    dropdown: {
+      backgroundColor: '#F9FAFB',
+      padding: 12,
+      borderRadius: 8,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+  
+    dropdownText: {
+      color: '#A9A9A9',
+      fontSize: 14,
+      fontFamily: 'Poppins-Regular',
+    },
+  
+    arrow: { width: 16, height: 16 },
+  
+    
+    locationInput: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#F9FAFB',
+      borderRadius: 8,
+      padding: 12,
+      marginBottom: 20,
+    },
+    locationIcon: { width: 16, height: 20 },
+    input: {
+      flex: 1,
+      marginLeft: 8,
+      fontSize: 14,
+      fontFamily: 'Poppins-Regular',
+      color: colors.black,
+    },
+  
+    /* search */
+    searchBtn: {
+      backgroundColor: colors.primary,
+      paddingVertical: 12,
+      paddingHorizontal: 40,
+      borderRadius: 10,
+      alignSelf: 'center',
+      marginTop: 60,
+    },
+    searchTxt: {
+      color: '#fff',
+      fontFamily: 'Poppins-Bold',
+      fontSize: 16,
+    },
+  
+    /* dropdown list */
+    dropdownList: {
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      paddingVertical: 6,
+      marginTop: 4,
+      elevation: 3,
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+    },
+    dropdownItem: {
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+    },
+    dropdownItemText: {
+      fontSize: 14,
+      fontFamily: 'Poppins-Regular',
+      color: colors.black,
+    },
 });
